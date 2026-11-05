@@ -30,8 +30,9 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Humble Brothers' Club, Ikirun",
+  "foundingDate": "2016-10-30",
   "slogan": "Humble, ko ni baje.",
-  "description": "A social club in Ikirun, Osun State, Nigeria, built on brotherhood, humility, unity and progress.",
+  "description": "A social club in Ikirun, Osun State, Nigeria, founded on October 30th, 2016, built on brotherhood, humility, unity and progress.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Opposite Federal Government College",
@@ -161,7 +162,7 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
 
 /* ---------- navigation ---------- */
 .site-header{
-  position:sticky;top:0;z-index:100;
+  position:sticky;top:0;z-index:140;
   --nav-fg:#fff;
   background:linear-gradient(180deg,rgba(6,24,38,.85) 0%,rgba(6,24,38,.65) 100%);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
@@ -181,7 +182,7 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
 }
 .site-header.scrolled .nav{height:68px}
 
-.brand{display:flex;align-items:center;gap:14px;min-width:0;text-decoration:none}
+.brand{display:flex;align-items:center;gap:14px;min-width:0;text-decoration:none;flex-shrink:0;white-space:nowrap}
 .brand-emblem{
   width:50px;height:50px;flex:none;border-radius:50%;background:#fff;
   border:2px solid var(--gold);
@@ -197,20 +198,20 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
 .brand-emblem svg{width:100%;height:100%;display:block}
 .brand-name{
   font-family:var(--font-serif);font-weight:700;font-size:1.06rem;line-height:1.15;
-  letter-spacing:.01em;color:var(--nav-fg,#fff);
+  letter-spacing:.01em;color:var(--nav-fg,#fff);white-space:nowrap;
   transition:color .3s ease;
 }
 .site-header.scrolled .brand-name{color:var(--ink)}
 .brand-loc{
   display:block;font-family:var(--font-sans);font-weight:600;font-size:.62rem;
-  letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-top:3px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-top:3px;white-space:nowrap;
   transition:color .3s ease;
 }
 
-.nav-links{display:flex;align-items:center;gap:clamp(6px,.9vw,14px)}
+.nav-links{display:flex;align-items:center;gap:clamp(6px,.9vw,14px);white-space:nowrap;flex-wrap:nowrap}
 .nav-links a{
   font-size:.83rem;font-weight:600;letter-spacing:.015em;color:var(--nav-fg,#fff);
-  padding:8px 13px;border-radius:999px;position:relative;
+  padding:8px 13px;border-radius:999px;position:relative;white-space:nowrap;
   transition:background .22s ease,color .22s ease,box-shadow .22s ease,transform .22s ease;
 }
 .nav-links a:hover{
@@ -229,7 +230,7 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
 }
 
 .nav-cta{
-  margin-left:6px;
+  margin-left:6px;white-space:nowrap;
   background:linear-gradient(135deg,var(--gold) 0%,var(--burgundy) 100%)!important;
   color:#fff!important;border:1px solid rgba(255,255,255,.25)!important;
   border-radius:999px!important;padding:9px 20px!important;
@@ -249,7 +250,7 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
 .hamburger{
   display:none;background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.16);border-radius:50%;
-  width:44px;height:44px;cursor:pointer;position:relative;z-index:130;
+  width:44px;height:44px;cursor:pointer;position:relative;z-index:150;
   transition:background .25s,border-color .25s,transform .25s;
 }
 .site-header.scrolled .hamburger{
@@ -260,22 +261,25 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
   display:block;width:22px;height:2px;background:var(--nav-fg,#fff);margin:5px auto;
   border-radius:2px;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s,background .3s;
 }
+.hamburger[aria-expanded="true"] span{background:#fff!important}
 .hamburger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .hamburger[aria-expanded="true"] span:nth-child(2){opacity:0}
 .hamburger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 .mobile-menu{
-  position:fixed;inset:0;z-index:120;
+  position:fixed;inset:0;z-index:130;
   background:radial-gradient(900px 600px at 80% 10%,rgba(0,119,182,.35),transparent 65%),
     linear-gradient(165deg,#061826 0%,#0A2540 60%,#0F4C81 120%);
-  display:flex;flex-direction:column;justify-content:center;padding:90px 8% 40px;
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:calc(var(--nav-h) + 16px) 6% 40px;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
   opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;
 }
 .mobile-menu.open{opacity:1;visibility:visible}
 .mobile-menu a.m-link{
-  font-family:var(--font-serif);font-size:clamp(1.5rem,5.8vw,2.1rem);color:#fff;
-  padding:12px 14px;border-radius:8px;border-bottom:1px solid rgba(0,119,182,.18);
-  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--font-serif);font-size:clamp(1.15rem,4.4vw,1.45rem);color:#fff;
+  padding:10px 14px;border-radius:8px;border-bottom:1px solid rgba(0,119,182,.18);
+  display:flex;justify-content:space-between;align-items:center;white-space:nowrap;
   opacity:0;transform:translateY(16px);
   transition:opacity .4s ease,transform .4s ease,background .25s ease,color .25s ease;
 }
@@ -283,14 +287,14 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
   background:rgba(255,255,255,.08);color:var(--gold-soft);
 }
 .mobile-menu a.m-link .num{
-  font-family:var(--font-sans);font-size:.7rem;letter-spacing:.2em;
-  color:var(--gold-soft);background:rgba(0,119,182,.25);padding:4px 9px;border-radius:999px;
+  font-family:var(--font-sans);font-size:.68rem;letter-spacing:.15em;
+  color:var(--gold-soft);background:rgba(0,119,182,.25);padding:3px 8px;border-radius:999px;
 }
 .mobile-menu.open a.m-link{opacity:1;transform:none}
 .mobile-menu-foot{
-  margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);
+  margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);
   display:flex;flex-direction:column;gap:10px;color:rgba(255,255,255,.8);
-  font-size:.88rem;opacity:0;transition:opacity .5s .25s;
+  font-size:.86rem;opacity:0;transition:opacity .5s .25s;
 }
 .mobile-menu.open .mobile-menu-foot{opacity:1}
 .mobile-menu-foot a{color:var(--gold-soft);font-weight:600;display:inline-flex;align-items:center;gap:8px}
@@ -459,7 +463,7 @@ h1.hero-title .thin{display:block;font-size:.42em;font-weight:500;letter-spacing
 .leader-card:hover img.leader-photo{transform:scale(1.05) translateY(-3px);box-shadow:0 10px 22px rgba(23,23,23,.18)}
 .leader-card-body{padding:22px 20px 24px;text-align:center;flex:1;display:flex;flex-direction:column}
 .leader-card h3{font-size:1.2rem;margin-bottom:0}
-.leader-role{font-size:.76rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--burgundy);margin:8px 0 0}
+.leader-role{font-size:.76rem;font-weight:600;letter-spacing:.12em;line-height:1.35;word-break:keep-all;text-transform:uppercase;color:var(--burgundy);margin:8px 0 0}
 .leader-role::after{content:"";display:block;width:28px;height:2px;background:var(--gold);margin:10px auto 12px}
 .leader-bio{font-size:.9rem;color:var(--muted);line-height:1.6;margin:0}
 
@@ -737,17 +741,17 @@ h1.hero-title .thin{display:block;font-size:.42em;font-weight:500;letter-spacing
 @supports not (selector: :focus-visible){ .reveal{opacity:1;transform:none} }
 
 /* ---------- responsive ---------- */
-@media (max-width:1160px) and (min-width:961px){
+@media (max-width:1220px) and (min-width:1041px){
   .nav-links{gap:4px}
   .nav-links a{font-size:.78rem;padding:7px 10px}
   .nav-cta{padding:8px 14px!important;font-size:.7rem!important}
-  .brand-name{font-size:.98rem}
+  .brand-name{font-size:.96rem}
 }
 @media (max-width:1080px){
   .masonry{columns:3}
   .lb-prev{left:8px}.lb-next{right:8px}
 }
-@media (max-width:960px){
+@media (max-width:1040px){
   .nav-links{display:none}
   .hamburger{display:grid;place-items:center}
   .hero-inner{grid-template-columns:1fr;padding-top:clamp(48px,7vw,72px)}
@@ -873,14 +877,14 @@ h1.hero-title .thin{display:block;font-size:.42em;font-weight:500;letter-spacing
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
       <a href="#home" class="active">Home</a>
-      <a href="#about">About Us</a>
+      <a href="#about">About</a>
       <a href="#leadership">Leadership</a>
-      <a href="#values">Our Values</a>
+      <a href="#values">Values</a>
       <a href="#activities">Activities</a>
       <a href="#gallery">Gallery</a>
       <a href="#membership">Membership</a>
       <a href="#contact">Contact</a>
-      <a href="#membership" class="nav-cta">Become a Member <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="#membership" class="nav-cta">Join Us <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </nav>
     <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -917,7 +921,7 @@ h1.hero-title .thin{display:block;font-size:.42em;font-weight:500;letter-spacing
     <div class="hero-copy">
       <div class="hero-emblem-row">
         <svg class="hero-emblem" role="img" aria-label="Official emblem of Humble Brothers' Club, Ikirun"><use href="#emblem"/></svg>
-        <p class="tag">Est. Ikirun, Osun State<b>Social Club &amp; Brotherhood</b></p>
+        <p class="tag">Est. October 30, 2016 &middot; Ikirun, Osun State<b>Social Club &amp; Brotherhood</b></p>
       </div>
       <h1 class="hero-title">Humble<br>Brothers&rsquo; Club<span class="thin">Ikirun &middot; Osun State &middot; Nigeria</span></h1>
       <p class="hero-motto">&ldquo;Humble, ko ni baje.&rdquo;</p>
@@ -992,13 +996,12 @@ h1.hero-title .thin{display:block;font-size:.42em;font-weight:500;letter-spacing
       </article>
     </div>
 
-    <!-- EDITABLE PLACEHOLDER — replace this card with the club's authentic history when
-         supplied by the leadership (founding date, founders, milestones, achievements). -->
+    <!-- Club Foundation and History Milestone -->
     <div class="story-slot reveal" data-delay="2">
-      <svg aria-hidden="true"><use href="#i-spark"/></svg>
+      <svg aria-hidden="true"><use href="#i-award"/></svg>
       <div>
-        <h4>Our Story &mdash; reserved for the club&rsquo;s archives</h4>
-        <p>The founding history, milestones and distinguished achievements of Humble Brothers&rsquo; Club will be published here once endorsed by the club&rsquo;s leadership. Members of the executive committee may submit the club&rsquo;s authentic records for inclusion.</p>
+        <h4>Our Foundation &amp; Legacy &mdash; Est. October 30th, 2016</h4>
+        <p>Founded on <strong>October 30th, 2016</strong> in Ikirun, Osun State, Humble Brothers&rsquo; Club was established as a brotherhood of dedicated gentlemen committed to mutual uplift, community service, and lifelong fellowship under our enduring creed &mdash; <em>&ldquo;Humble, ko ni baje&rdquo;</em>.</p>
       </div>
     </div>
 
@@ -1563,7 +1566,7 @@ h1.hero-title .thin{display:block;font-size:.42em;font-weight:500;letter-spacing
           <span class="brand-emblem"><svg role="img" aria-label="Humble Brothers' Club emblem"><use href="#emblem"/></svg></span>
           <span class="brand-name">Humble Brothers&rsquo; Club<span class="brand-loc">Ikirun &middot; Osun State</span></span>
         </a>
-        <p>The official digital home of Humble Brothers&rsquo; Club, Ikirun &mdash; a brotherhood of gentlemen advancing together in humility, unity and progress.</p>
+        <p>The official digital home of Humble Brothers&rsquo; Club, Ikirun &mdash; founded on October 30th, 2016. A brotherhood of gentlemen advancing together in humility, unity and progress.</p>
         <p class="f-motto">&ldquo;Humble, ko ni baje.&rdquo;</p>
       </div>
       <div>
