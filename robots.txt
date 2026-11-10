@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://muibinurudeen24434-arch.github.io/humble-brothers-club/sitemap.xml
+Sitemap: https://www.humblebrothersclub.com.ng/sitemap.xml
