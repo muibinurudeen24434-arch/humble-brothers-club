@@ -1,3 +1,5 @@
 # Local source folder for member photos + details notes.
 # Not published: keeps raw phone numbers and pending entries off the live site.
 /members folders/
+# Local archives of private member notes; never publish.
+/backups/
