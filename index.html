@@ -127,6 +127,10 @@ p,li{text-wrap:pretty}
 .eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
 .section-head.center .eyebrow::after{content:"";width:34px;height:1px;background:var(--gold)}
 .eyebrow.on-dark{color:var(--gold-light)}
+.eyebrow::before{transform-origin:left;transition:transform .7s var(--ease-out) .12s}
+.section-head.center .eyebrow::after{transform-origin:right;transition:transform .7s var(--ease-out) .12s}
+html.js .section-head.reveal:not(.in) .eyebrow::before,
+html.js .section-head.reveal:not(.in) .eyebrow::after{transform:scaleX(0)}
 h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
 .section-title em{font-style:italic;color:var(--primary)}
 .on-dark h2.section-title, h2.section-title.on-dark{color:#fff}
@@ -375,6 +379,25 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
   position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);
   animation:heroIn 1s var(--ease-out) both;
   background:var(--cream-deep);
+}
+/* entrance choreography: the hero column arrives in sequence */
+.hero-copy > *{animation:heroRise .9s var(--ease-out) backwards}
+.hero-copy > *:nth-child(1){animation-delay:.05s}
+.hero-copy > *:nth-child(2){animation-delay:.1s}
+.hero-copy > *:nth-child(3){animation-delay:.24s}
+.hero-copy > *:nth-child(4){animation-delay:.32s}
+.hero-copy > *:nth-child(5){animation-delay:.4s}
+.hero-copy > *:nth-child(6){animation-delay:.48s}
+.hero-copy > .hero-title{animation-name:heroTitle;animation-duration:1.05s}
+.hero-card{animation:heroIn .9s var(--ease-out) .5s backwards}
+.hero-badge{animation:badgeIn .7s var(--ease-out) .72s backwards}
+@keyframes heroRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes heroTitle{from{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(12px)}to{opacity:1;clip-path:inset(0 0 -4% 0);transform:none}}
+@keyframes badgeIn{from{opacity:0;transform:rotate(6deg) scale(.65)}to{opacity:1;transform:rotate(6deg) scale(1)}}
+.scroll-progress{
+  position:fixed;top:0;left:0;height:2px;width:100%;z-index:160;pointer-events:none;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-light));
+  transform:scaleX(0);transform-origin:0 50%;
 }
 .hero-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 65%,rgba(23,23,23,.35));pointer-events:none}
 .hero-frame img{
@@ -1005,6 +1028,7 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .reveal,html.js .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .hero-copy > *,.hero-frame,.hero-card,.hero-badge{animation:none}
   .scroll-cue::before{animation:none}
   .fab-wa .ring{animation:none}
 }
@@ -1012,6 +1036,7 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip-link" href="#home">Skip to main content</a>
 
 <!-- ===== SVG icon sprite ===== -->
@@ -2037,9 +2062,16 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- sticky header ---------- */
+  var progressBar = document.querySelector('.scroll-progress');
+  function paintProgress(){
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+    if(progressBar){ progressBar.style.transform = 'scaleX(' + p.toFixed(4) + ')'; }
+  }
   function onScroll(){
     if(window.scrollY > 40){ header.classList.add('scrolled'); }
     else{ header.classList.remove('scrolled'); }
+    paintProgress();
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
@@ -2093,6 +2125,20 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
       });
     }, {threshold:0.12, rootMargin:'0px 0px -36px 0px'});
     revealEls.forEach(function(el){ revealObs.observe(el); });
+  }
+
+  /* ---------- hero parallax ---------- */
+  var heroSection = document.getElementById('home');
+  var heroMedia = document.querySelector('.hero-media');
+  if(heroSection && heroMedia && !prefersReduced && window.matchMedia('(min-width:1041px)').matches){
+    var paintParallax = function(){
+      var r = heroSection.getBoundingClientRect();
+      if(r.bottom < 0){ return; }
+      var p = Math.min(Math.max(-r.top / (r.height || 1), 0), 1);
+      heroMedia.style.transform = 'translate3d(0,' + (p * 46).toFixed(1) + 'px,0)';
+    };
+    window.addEventListener('scroll', paintParallax, {passive:true});
+    paintParallax();
   }
 
   /* ---------- gallery filter ---------- */
