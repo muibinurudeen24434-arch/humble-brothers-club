@@ -743,7 +743,7 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
   background:
     radial-gradient(800px 400px at 15% 10%,rgba(200,162,74,.20),transparent 55%),
     linear-gradient(150deg,var(--ink-strong) 0%,var(--ink-deep) 90%);
-  color:#fff;text-align:center;position:relative;overflow:hidden;padding:clamp(80px,10vw,130px) 0;
+  color:#fff;text-align:center;position:relative;overflow:hidden;padding:clamp(72px,9vw,116px) 0 clamp(36px,4vw,52px);
 }
 .motto-band .laurel{position:absolute;top:50%;width:clamp(120px,16vw,220px);height:auto;opacity:.16;color:var(--gold)}
 .motto-band .laurel.l{left:clamp(8px,6vw,90px);transform:translateY(-50%) rotate(-6deg)}
@@ -756,19 +756,30 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
 .motto-marquee{
   margin-top:clamp(40px,5vw,58px);padding-top:24px;overflow:hidden;
   border-top:1px solid rgba(255,255,255,.14);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);
 }
 .marquee-track{display:flex;width:max-content;animation:marquee 44s linear infinite}
 .marquee-group{display:flex;align-items:center;gap:clamp(26px,3vw,44px);padding-right:clamp(26px,3vw,44px);flex:none}
 .marquee-group span{
   display:inline-flex;align-items:center;gap:clamp(26px,3vw,44px);
   font-family:var(--font-serif);font-style:italic;font-size:clamp(.95rem,1.5vw,1.15rem);
-  color:rgba(255,255,255,.5);white-space:nowrap;
+  color:rgba(255,255,255,.62);white-space:nowrap;
 }
 .marquee-group span::after{content:"\2726";color:var(--gold);font-size:.62em;font-style:normal;opacity:.85}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+@media (max-width:640px){
+  .motto-marquee{
+    margin-top:36px;padding-top:20px;
+    -webkit-mask-image:none;mask-image:none;
+  }
+  .marquee-track{animation:none;width:100%}
+  .marquee-group{display:none}
+  .marquee-group:first-child{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px;width:100%;padding-right:0}
+  .marquee-group span{font-size:.9rem;gap:8px}
+  .marquee-group span:last-child::after{content:none}
+}
 
 /* ---------- membership ---------- */
 .membership{background:var(--ink);color:rgba(255,255,255,.8);position:relative;overflow:hidden}
