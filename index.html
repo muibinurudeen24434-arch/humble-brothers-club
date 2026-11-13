@@ -106,7 +106,8 @@ img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 ul,ol{list-style:none}
 button,input,textarea,select{font:inherit;color:inherit}
-h1,h2,h3,h4{font-family:var(--font-serif);color:var(--ink);line-height:1.14;font-weight:600;letter-spacing:-.01em}
+h1,h2,h3,h4{font-family:var(--font-serif);color:var(--ink);line-height:1.14;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+p,li{text-wrap:pretty}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:2px}
 ::selection{background:var(--primary);color:#fff}
 .skip-link{position:absolute;left:-9999px;top:0;background:var(--primary);color:#fff;padding:10px 18px;font-weight:600;z-index:300;border-radius:0 0 var(--radius) 0}
@@ -114,7 +115,8 @@ h1,h2,h3,h4{font-family:var(--font-serif);color:var(--ink);line-height:1.14;font
 
 /* ---------- shared layout primitives ---------- */
 .container{width:min(1180px,92%);margin-inline:auto}
-.section{padding:clamp(72px,9vw,120px) 0;position:relative}
+.section{padding:clamp(64px,7.5vw,104px) 0;position:relative}
+.intro,.values,.gallery{border-top:1px solid rgba(11,31,51,.06)}
 .section-head{max-width:720px;margin:0 auto clamp(40px,5vw,64px);text-align:center}
 .section-head.left{text-align:left;margin-inline:0}
 .eyebrow{
@@ -141,7 +143,8 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
   letter-spacing:.01em;text-transform:none;cursor:pointer;white-space:nowrap;
   transition:background .25s,color .25s,border-color .25s,transform .3s var(--ease-out),box-shadow .3s;
 }
-.btn svg{width:17px;height:17px;flex:none}
+.btn svg{width:17px;height:17px;flex:none;transition:transform .35s var(--ease-out)}
+.btn:hover svg{transform:translateX(3px)}
 .btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
 .btn-primary:hover{background:var(--ink-strong);border-color:var(--ink-strong);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
 .btn-outline{border-color:rgba(255,255,255,.55);color:#fff;background:transparent}
@@ -230,12 +233,14 @@ h2.section-title{font-size:clamp(1.9rem,3.6vw,2.85rem);letter-spacing:-.01em}
   padding:9px 14px;border-radius:999px;position:relative;white-space:nowrap;
   transition:background .22s ease,color .22s ease,box-shadow .22s ease,transform .22s ease;
 }
-.nav-links a:hover{
-  background:rgba(255,255,255,.14);color:#fff;transform:translateY(-1px);
+.nav-links a::before{
+  content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform .35s var(--ease-out);
 }
-.site-header.scrolled .nav-links a:hover{
-  background:rgba(18,59,94,.08);color:var(--primary);
-}
+.nav-links a:hover{background:transparent;color:#fff}
+.nav-links a:hover::before{transform:scaleX(1)}
+.site-header.scrolled .nav-links a:hover{background:transparent;color:var(--primary)}
 .nav-links a.active{background:transparent;color:#fff;box-shadow:none;font-weight:600}
 .nav-links a.active::after{
   content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;
@@ -393,7 +398,7 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
   font-size:.52rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.7;
   transform:rotate(6deg);padding:0 12px;
 }
-.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:26px;height:42px;border:1.5px solid rgba(255,255,255,.4);border-radius:14px;display:none}
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:26px;height:42px;border:1.5px solid rgba(255,255,255,.4);border-radius:14px;display:block}
 .scroll-cue::before{content:"";position:absolute;left:50%;top:8px;width:3px;height:8px;border-radius:2px;background:var(--gold);transform:translateX(-50%);animation:cue 1.8s infinite}
 @keyframes cue{0%{opacity:0;transform:translate(-50%,0)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,14px)}}
 /* ---------- intro (two-column) ---------- */
@@ -427,8 +432,9 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
 .pillar h3 svg{width:20px;height:20px;color:var(--primary);flex:none}
 .pillar p{font-size:.95rem;color:var(--muted)}
 .story-slot{
-  margin-top:clamp(40px,5vw,56px);border:1.5px dashed var(--line-gold);border-radius:var(--radius);
-  background:var(--gold-wash);padding:28px 30px;display:flex;gap:18px;align-items:flex-start;
+  margin-top:clamp(40px,5vw,56px);border:1px solid var(--line);border-left:3px solid var(--gold);
+  border-radius:var(--radius-sm);background:var(--paper);padding:26px 28px;
+  display:flex;gap:18px;align-items:flex-start;box-shadow:var(--shadow-sm);
 }
 .story-slot svg{width:22px;height:22px;color:var(--primary);flex:none;margin-top:3px}
 .story-slot h4{font-size:1.05rem;margin-bottom:6px}
@@ -690,12 +696,16 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
 .g-item[data-cat="emblem"] img{object-fit:contain;background:var(--cream);padding:18px}
 .g-item:hover img{transform:scale(1.04)}
 .g-cap{
-  width:100%;margin:0;padding:12px 14px;color:var(--ink);
+  position:absolute;left:0;right:0;bottom:0;margin:0;padding:26px 14px 13px;color:#fff;
   font-size:.82rem;font-weight:600;letter-spacing:0;text-transform:none;
   display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;
-  border-top:1px solid var(--line);background:var(--paper);transition:color .3s;
+  background:linear-gradient(180deg,rgba(7,22,35,0) 0%,rgba(7,22,35,.88) 74%);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .35s ease,transform .4s var(--ease-out);
 }
-.g-item:hover .g-cap{color:var(--primary)}
+.g-cap svg{color:var(--gold-light)}
+@media (hover:hover){.g-item:hover .g-cap,.g-item:focus-visible .g-cap{opacity:1;transform:none}}
+@media (hover:none){.g-cap{opacity:1;transform:none}}
 .g-cap svg{width:13px;height:13px;color:var(--primary);flex:none}
 .g-more{text-align:center;margin-top:38px}
 
@@ -742,6 +752,23 @@ h1.hero-title .thin{display:block;font-size:.38em;font-weight:500;letter-spacing
 .motto-band h2{font-size:clamp(2rem,5.6vw,3.9rem);font-weight:700;color:#fff;letter-spacing:.02em}
 .motto-band .orn{color:var(--gold);margin:26px auto 20px}
 .motto-band p{max-width:60ch;margin-inline:auto;color:rgba(255,255,255,.75);font-size:1.02rem}
+/* slow values ticker closing the band */
+.motto-marquee{
+  margin-top:clamp(40px,5vw,58px);padding-top:24px;overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.14);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+}
+.marquee-track{display:flex;width:max-content;animation:marquee 44s linear infinite}
+.marquee-group{display:flex;align-items:center;gap:clamp(26px,3vw,44px);padding-right:clamp(26px,3vw,44px);flex:none}
+.marquee-group span{
+  display:inline-flex;align-items:center;gap:clamp(26px,3vw,44px);
+  font-family:var(--font-serif);font-style:italic;font-size:clamp(.95rem,1.5vw,1.15rem);
+  color:rgba(255,255,255,.5);white-space:nowrap;
+}
+.marquee-group span::after{content:"\2726";color:var(--gold);font-size:.62em;font-style:normal;opacity:.85}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
 
 /* ---------- membership ---------- */
 .membership{background:var(--ink);color:rgba(255,255,255,.8);position:relative;overflow:hidden}
@@ -918,18 +945,15 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
   display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.5vw,28px);text-align:center;
 }
 .stat-card{
-  padding:20px 16px;border-radius:var(--radius);
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+  padding:22px 16px 20px;border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+  transition:transform .4s var(--ease-out),border-color .4s ease,background .4s ease;
 }
-.stat-card:hover{
-  transform:translateY(-5px);border-color:var(--gold);
-  box-shadow:0 10px 28px -4px rgba(200,162,74,.45);
-}
+.stat-card:hover{transform:translateY(-4px);border-color:rgba(200,162,74,.55);background:rgba(255,255,255,.06)}
 .stat-num{
   font-family:var(--font-serif);font-size:clamp(2.1rem,3.6vw,3.2rem);
-  font-weight:700;line-height:1.1;color:var(--gold-light);
+  font-weight:600;line-height:1.1;color:var(--gold-light);letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums lining-nums;
   display:flex;align-items:center;justify-content:center;gap:2px;margin-bottom:6px;
 }
 .stat-label{
@@ -1750,6 +1774,12 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
     <h2 class="reveal" data-delay="1">&ldquo;HUMBLE, KO NI BAJE.&rdquo;</h2>
     <p class="orn reveal" data-delay="2" aria-hidden="true"><svg width="120" height="14"><use href="#i-orn"/></svg></p>
     <p class="reveal" data-delay="3">A brotherhood founded on humility, strengthened by unity and committed to progress. The motto is our compass &mdash; carried by every member, in every room, in every season.</p>
+    <div class="motto-marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group"><span>Humble, ko ni baje.</span><span>Brotherhood</span><span>Unity</span><span>Progress</span></div>
+        <div class="marquee-group"><span>Humble, ko ni baje.</span><span>Brotherhood</span><span>Unity</span><span>Progress</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
