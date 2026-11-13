@@ -978,7 +978,12 @@ html.js .reveal[data-delay="5"]{transition-delay:.35s}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
 }
 @media (max-width:480px){
-  .stats-grid{grid-template-columns:1fr;gap:12px}
+  .stats-strip{padding:clamp(26px,6vw,38px) 0}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-card{padding:16px 10px 15px}
+  .stat-num{font-size:1.7rem;margin-bottom:4px}
+  .stat-label{font-size:.7rem;letter-spacing:.03em;line-height:1.4}
+  .stat-sub{font-size:.7rem;line-height:1.35}
 }
 
 /* ---------- members grid mobile enhancements ---------- */
